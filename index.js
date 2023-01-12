@@ -4,7 +4,9 @@ const app = express()
 const cors = require("cors")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
+const passport = require("passport")
 const morgan = require("morgan")
+const cookieParser = require("cookie-parser")
 
 
 app.use(cors({
@@ -15,7 +17,10 @@ app.use(cors({
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
 }))
+app.use(cookieParser())
 app.use(express.json())
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(morgan("common"))
 require("./services/db/connectDb")()
 require("./services/passport/passport")
@@ -23,6 +28,7 @@ require("./services/passport/passport")
 const store = MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
     ttl: 1000 * 60 * 60 * 10,
+    autoRemove: 'native',
     collectionName: "vrumies_session"
 })
 
@@ -36,6 +42,8 @@ app.use(session({
     cookie: {
         secure: true,
         maxAge: 1000 * 60 * 60 * 1,
+        httpOnly: true,
+        sameSite: "none"
     },
 }))
 
