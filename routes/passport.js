@@ -4,9 +4,9 @@ router.get('/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: 'http://localhost:3000/authenticate' }),
+    passport.authenticate('google', { failureRedirect: 'https://luxury-pika-c9a6da.netlify.app/signup' }),
     function (req, res) {
-        res.redirect('http://localhost:3000/');
+        res.redirect('https://luxury-pika-c9a6da.netlify.app/');
     });
 
 module.exports = router
