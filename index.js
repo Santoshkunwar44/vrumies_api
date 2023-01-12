@@ -28,7 +28,6 @@ require("./services/passport/passport")
 const store = MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
     ttl: 1000 * 60 * 60 * 10,
-    autoRemove: 'native',
     collectionName: "vrumies_session"
 })
 
