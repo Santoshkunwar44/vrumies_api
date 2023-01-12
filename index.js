@@ -8,11 +8,13 @@ const morgan = require("morgan")
 
 
 app.use(cors({
-    origin: "*",
+    origin: [
+        "https://luxury-pika-c9a6da.netlify.app",
+        "http://localhost:3000"
+    ],
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
 }))
-
 app.use(express.json())
 app.use(morgan("common"))
 require("./services/db/connectDb")()
