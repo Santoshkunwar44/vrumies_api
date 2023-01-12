@@ -8,7 +8,7 @@ const morgan = require("morgan")
 
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://luxury-pika-c9a6da.netlify.app",
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
 }))
