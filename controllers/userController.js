@@ -74,14 +74,11 @@ class UserController {
 
     async loggedInUser(req, res) {
         const passportSessionUser = req.session?.passport?.user
-
-
-
         if (passportSessionUser) {
             let updatedUser = await isUserUpdated(passportSessionUser)
             return res.status(200).json({ message: updatedUser, success: true })
         } else {
-            return res.status(500).json({ message: "User has not Logged IN", success: true })
+            return res.status(500).json({ message: "User has not Logged IN", success: false })
         }
     }
 

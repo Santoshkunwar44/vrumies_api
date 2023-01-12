@@ -8,7 +8,7 @@ const morgan = require("morgan")
 
 
 app.use(cors({
-    origin: "https://luxury-pika-c9a6da.netlify.app",
+    origin: "*",
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
 }))
@@ -32,6 +32,7 @@ app.use(session({
     store,
     saveUninitialized: false,
     cookie: {
+        secure: true,
         maxAge: 1000 * 60 * 60 * 1,
     },
 }))
