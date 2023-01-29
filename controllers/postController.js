@@ -4,6 +4,7 @@ const User = require("../model/User")
 class PostController {
 
 
+
     async addNewPost(req, res) {
 
         const { owner, VBTused } = req.body
@@ -32,7 +33,17 @@ class PostController {
     async getAllPost(req, res) {
 
         try {
-            const allPosts = await Post.find({ isHidden: false })
+            // const allPosts = await Post.find({ isHidden: false })
+            const allPosts = await Post.aggregate([
+                {
+                    $match: { isHidden: false }
+                },
+                {
+                    $sort: {
+                        VBTused: -1, orderNowBtn: 1
+                    }
+                }
+            ])
             res.json({
                 message: allPosts,
                 success: true
@@ -49,7 +60,8 @@ class PostController {
             catName = catName.replaceAll("&&", "/")
         }
         try {
-            const thePosts = await Post.find({ category: catName, isHidden: false }).sort({ VBTused: -1 }).populate("owner")
+            const thePosts = await Post.find({ category: catName, isHidden: false }).sort({ VBTused: -1, orderNowBtn: 1 }).populate("owner")
+
             return res.status(200).json({ message: thePosts, success: true })
 
         } catch (error) {
@@ -69,6 +81,30 @@ class PostController {
             return res.status(500).json({ message: error, success: false })
         }
     }
+    async addMoreVBTtoPost(req, res) {
+        const { id } = req.params;
+        const { vbt, userId } = req.body
+        console.log(id, vbt, userId)
+        try {
+            if (!id || !vbt) {
+                throw new Error("Invalid credentails ");
+            }
+            const updatedPost = await Post.findByIdAndUpdate(id,
+                {
+                    $inc: { VBTused: vbt }
+                },
+                {
+                    new: true
+                }).populate("owner")
+            await User.findByIdAndUpdate(userId, {
+                $inc: { tokenAvailabe: -vbt }
+            })
+            res.status(200).json({ message: updatedPost, success: true })
+        } catch (error) {
+            console.log(error)
+            res.status(403).json({ message: error, success: false })
+        }
+    }
     async updatePost(req, res) {
 
         const { postId } = req.params;
@@ -80,7 +116,7 @@ class PostController {
                 $set: req.body
             }, {
                 new: true
-            })
+            }).populate("owner")
 
 
 

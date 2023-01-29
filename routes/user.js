@@ -3,6 +3,8 @@ const userController = require("../controllers/userController")
 const router = require("express").Router()
 
 router.get("/loggedInUser", userController.loggedInUser)
+router.get("/account/refresh", userController.refresh)
+router.post("/login", userController.loginUser)
 router.get("/all", userController.getUsers)
 router.get("/:userId", userController.getUserById)
 router.post("/", userController.addNewUser)

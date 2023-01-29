@@ -9,21 +9,28 @@ class AuthService {
             try {
                 const User = await UserModal.findOne({ email })
                 if (User) {
+                    console.log(User._id)
+                    await UserModal.findByIdAndUpdate(User._id, {
+                        $set: {
+                            lastLoggedIn: Date.now()
+                        }
+                    })
                     const { password, ...others } = User._doc
                     req.session.user = {
-                        ...others
+                        ...others,
                     }
-                    return User
+                    return req.session.user
                 } else {
                     const salt = await bcrypt.genSalt(10)
                     const hashedPassword = await bcrypt.hash(user.username, salt)
                     user.password = hashedPassword
+                    user.lastLoggedIn = Date.now()
                     const User = await UserModal.create(user)
                     const { password, ...others } = User._doc
                     req.session.user = {
-                        ...others
+                        ...others,
                     }
-                    return User
+                    return req.session.user
                 }
             } catch (error) {
                 console.log(error)
@@ -33,26 +40,50 @@ class AuthService {
     }
 
     async isUserUpdated(prevUser) {
-
         try {
             const user = await UserModal.findById(prevUser._id)
             const { updatedAt: newUserUpdatedTime } = user._doc;
             const { updatedAt: prevUserUpdatedTime } = prevUser
             let newUpdatedTimeInMS = new Date(newUserUpdatedTime).getTime()
             let prevUpdatedTimeInMS = new Date(prevUserUpdatedTime).getTime()
-            // console.log(newUserUpdatedTime)
-            console.log(prevUser, user._doc)
             if (newUpdatedTimeInMS > prevUpdatedTimeInMS) {
-                return user._doc
+                const { password, ...others } = user._doc
+                return others
             } else {
-                return user._doc //   ||  prevUser 
+                return prevUser
             }
         } catch (error) {
             console.log(error)
             return error
         }
+    }
+
+
+    async timeForPassportSessionToExpire(user) {
+
+        const { lastLoggedIn } = user;
+
+
+        let currentTimeInMs = Date.now();
+
+        let remainingTimeInMs = currentTimeInMs - lastLoggedIn;
+
+        
+
+
+
+
+
+
+
+
+
 
     }
+
+
+
+
 
 }
 

@@ -12,13 +12,7 @@ class TransactionController {
         }
     }
 
-
-
-
-
     async getTransactionAsInpection(req, res) {
-
-
         const { inspectAs, userId } = req.query
         let queryObj = {}
 
@@ -29,17 +23,12 @@ class TransactionController {
                 queryObj.buyer = userId
             }
         }
-
-
-
         try {
             const getTransactions = await Transactions.find(queryObj).populate("seller").populate("buyer")
             return res.status(200).json({ message: getTransactions, success: true })
         } catch (error) {
             return res.status(500).json({ message: error.message, success: false })
-
         }
-
     }
 
 
@@ -109,6 +98,7 @@ class TransactionController {
                     { returnOriginal: false }
                 )
             }
+
             else {
                 await User.findOneAndUpdate(
                     { _id: seller },
@@ -175,6 +165,7 @@ class TransactionController {
 
     async buyTokens(req, res) {
         const { userId, VBTcount } = req.body;
+        console.log(req.body)
 
         try {
             const theUser = await User.findById(userId)
@@ -183,6 +174,7 @@ class TransactionController {
             })
             return res.status(200).json({ message: "VBTbought successfully", success: true })
         } catch (error) {
+            console.log(error)
             return res.status(500).json({ message: "Something went wrong", success: false })
         }
     }

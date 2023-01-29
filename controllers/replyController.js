@@ -53,7 +53,6 @@ class ReplyController {
         const replyId = req.params.replyId
         try {
             await Reply.findByIdAndDelete(replyId)
-            return res.json({ message: "reply quote deleted", success: true })
         } catch (error) {
             res.json({ message: error, success: false })
         }

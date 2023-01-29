@@ -20,7 +20,7 @@ const userModel = mongoose.Schema({
         type: Number,
         default: 0
     },
-    lastLoggedIn: { type: Date }
+    lastLoggedIn: Number,
 }, {
     timestamps: true
 })
