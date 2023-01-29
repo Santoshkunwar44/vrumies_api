@@ -5,7 +5,7 @@ const { createGoogleUser } = require('../authService/AuthService');
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL,
+    callbackURL: "https://vrumies-api.vercel.app/api/passport/google/callback",
     passReqToCallback: true
 },
     async function (request, accessToken, refreshToken, profile, done) {
