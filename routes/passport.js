@@ -14,10 +14,12 @@ router.get('/google/callback',
         res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             httpOnly: true,
+            secure: true,
         })
         res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             httpOnly: true,
+            secure: true,
         })
         res.redirect('http://localhost:3000/');
     });

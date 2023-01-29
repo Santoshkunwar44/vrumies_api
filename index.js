@@ -14,11 +14,14 @@ app.use(cors({
     origin: "http://localhost:3000",
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
+
 }))
+
 app.set("trust proxy", 1)
-app.use(express.json())
 app.use(cookieParser())
+app.use(express.json())
 app.use(morgan("common"))
+
 require("./services/db/connectDb")()
 require("./services/passport/passport")
 
@@ -36,10 +39,10 @@ app.use(session({
     store,
     saveUninitialized: false,
     cookie: {
+        secure: true,
         maxAge: 31556952000,
         httpOnly: true,
         sameSite: "none",
-        secure: true,
     },
 }))
 app.use(passport.initialize())
