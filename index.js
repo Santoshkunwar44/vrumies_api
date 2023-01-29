@@ -11,7 +11,10 @@ const { tokenVerification } = require('./middlewares/authMiddleware')
 
 
 app.use(cors({
-    origin: ["https://candid-capybara-9e49cc.netlify.app", "http://localhost:8000/api", process.env.FRONTEND_URL],
+    origin: [
+        "https://candid-capybara-9e49cc.netlify.app",
+        "http://localhost:8000/api",
+    ],
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
 

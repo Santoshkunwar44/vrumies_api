@@ -4,7 +4,7 @@ const TokenService = require("../services/authService/TokenService");
 router.get('/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: 'http://localhost:3000/authenticate' }),
+    passport.authenticate('google', { failureRedirect: 'https://candid-capybara-9e49cc.netlify.app/signup' }),
     async function (req, res) {
         const { ...others } = req.session.passport.user;
         const { accessToken, refreshToken } = await TokenService.createToken({
@@ -21,7 +21,7 @@ router.get('/google/callback',
             httpOnly: true,
             secure: true,
         })
-        res.redirect('http://localhost:3000/');
+        res.redirect('https://candid-capybara-9e49cc.netlify.app/');
     });
 
 module.exports = router
