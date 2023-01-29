@@ -6,6 +6,7 @@ const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cookieParser = require("cookie-parser")
 const morgan = require("morgan")
+const passport = require("passport")
 const { tokenVerification } = require('./middlewares/authMiddleware')
 
 
@@ -14,7 +15,7 @@ app.use(cors({
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true,
 }))
-
+app.set("trust proxy", 1)
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("common"))
@@ -41,6 +42,9 @@ app.use(session({
         secure: true,
     },
 }))
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 app.use("/api/passport", require("./routes/passport"))
 app.use("/api/post", require("./routes/post"))
@@ -51,5 +55,5 @@ app.use("/api/payment", require("./routes/payment"))
 app.use("/api/transaction", require("./routes/transaction"))
 
 
-app.listen(8000, () => console.log("server started at port 8000"))
+app.listen(8080, () => console.log("server started at port 8000"))
 
