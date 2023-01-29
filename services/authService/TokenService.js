@@ -1,4 +1,3 @@
-const RefreshToken = require("../../model/RefreshToken")
 const jwt = require("jsonwebtoken")
 
 class TokenService {
