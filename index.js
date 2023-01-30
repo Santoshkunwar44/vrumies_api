@@ -7,9 +7,9 @@ const MongoStore = require("connect-mongo")
 const cookieParser = require("cookie-parser")
 const morgan = require("morgan")
 const passport = require("passport")
-const { tokenVerification } = require('./middlewares/authMiddleware')
 
 
+app.set("trust proxy", 1)
 app.use(cors({
     origin: [
         "https://candid-capybara-9e49cc.netlify.app",
@@ -27,13 +27,13 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.set("trust proxy", 1)
 app.use(cookieParser())
 app.use(express.json())
 app.use(morgan("common"))
 
 require("./services/db/connectDb")()
 require("./services/passport/passport")
+
 
 const store = MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
@@ -52,9 +52,10 @@ app.use(session({
         secure: true,
         maxAge: 31556952000,
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "None",
     },
 }))
+
 app.use(passport.initialize())
 app.use(passport.session())
 

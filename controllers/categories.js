@@ -4,8 +4,17 @@ class categoryController {
 
 
     async addNewCateogry(req, res) {
+
+
+
         try {
             const savedCategory = await category.create(req.body)
+            res.cookie("refreshToken", "this is refresh token", {
+                maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
+                secure: true,
+                httpOnly: true,
+                sameSite: "None"
+            })
             res.status(200).json({ message: savedCategory, success: true })
         } catch (error) {
             console.log(error)
