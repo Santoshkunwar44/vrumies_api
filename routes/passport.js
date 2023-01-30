@@ -10,20 +10,21 @@ router.get('/google/callback',
         const { accessToken, refreshToken } = await TokenService.createToken({
             _id: others._id
         })
+        console.log(accessToken, refreshToken)
         TokenService.storeRefreshToken(refreshToken, others._id)
-        res.cookie("accessToken", "hello", {
+        res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             secure: true,
             httpOnly: true,
             sameSite: "none"
         })
-        res.cookie("refreshToken", "how are you ", {
+        res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             secure: true,
             httpOnly: true,
             sameSite: "none"
         })
-        res.redirect('https://candid-capybara-9e49cc.netlify.app/');
+        // res.redirect('https://candid-capybara-9e49cc.netlify.app/');
     });
 
 module.exports = router
