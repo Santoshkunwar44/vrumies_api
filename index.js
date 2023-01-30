@@ -16,8 +16,7 @@ app.use(cors({
         "http://localhost:8000/api",
     ],
     methods: ["POST,PUT,GET,DELETE"],
-    credentials: true,
-
+    credentials: true
 }))
 
 app.set("trust proxy", 1)

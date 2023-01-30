@@ -13,12 +13,10 @@ router.get('/google/callback',
         TokenService.storeRefreshToken(refreshToken, others._id)
         res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
-            httpOnly: true,
             secure: true,
         })
         res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
-            httpOnly: true,
             secure: true,
         })
         res.redirect('https://candid-capybara-9e49cc.netlify.app/');
