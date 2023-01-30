@@ -24,7 +24,7 @@ router.get('/google/callback',
             httpOnly: true,
             sameSite: "none"
         })
-        // res.redirect('https://candid-capybara-9e49cc.netlify.app/');
+        res.redirect('https://candid-capybara-9e49cc.netlify.app/');
     });
 
 module.exports = router
