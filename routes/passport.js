@@ -14,7 +14,6 @@ router.get('/google/callback',
         res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             secure: true,
-            domain: "https://candid-capybara-9e49cc.netlify.app",
             httpOnly: true,
             sameSite: "None"
         })
@@ -22,7 +21,6 @@ router.get('/google/callback',
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             secure: true,
             httpOnly: true,
-            domain: "https://candid-capybara-9e49cc.netlify.app",
             sameSite: "None"
         })
         res.redirect('https://candid-capybara-9e49cc.netlify.app/');
