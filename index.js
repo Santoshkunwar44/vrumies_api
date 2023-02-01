@@ -46,7 +46,7 @@ app.use(session({
         maxAge: 31556952000,
         httpOnly: true,
         domain: "https://candid-capybara-9e49cc.netlify.app",
-        sameSite: "none",
+        sameSite: "None",
     },
 }))
 

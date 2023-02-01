@@ -16,14 +16,14 @@ router.get('/google/callback',
             secure: true,
             domain: "https://candid-capybara-9e49cc.netlify.app",
             httpOnly: true,
-            sameSite: "none"
+            sameSite: "None"
         })
         res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,
             secure: true,
             httpOnly: true,
             domain: "https://candid-capybara-9e49cc.netlify.app",
-            sameSite: "none"
+            sameSite: "None"
         })
         res.redirect('https://candid-capybara-9e49cc.netlify.app/');
     });
