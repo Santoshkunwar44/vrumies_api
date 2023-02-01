@@ -10,7 +10,6 @@ router.get('/google/callback',
         const { accessToken, refreshToken } = await TokenService.createToken({
             _id: others._id
         })
-        console.log(accessToken, refreshToken)
         TokenService.storeRefreshToken(refreshToken, others._id)
         res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30 * 12 * 2,

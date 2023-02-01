@@ -13,19 +13,12 @@ app.set("trust proxy", 1)
 app.use(cors({
     origin: [
         "https://candid-capybara-9e49cc.netlify.app",
-        "http://localhost:8000/api",
+        "http://localhost:3000",
     ],
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true
 }))
 
-app.use(function (req, res, next) {
-    console.log(req.headers.origin)
-    res.header("Access-Control-Allow-Headers", "*");
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    next();
-});
 
 app.use(cookieParser())
 app.use(express.json())
@@ -52,7 +45,8 @@ app.use(session({
         secure: true,
         maxAge: 31556952000,
         httpOnly: true,
-        sameSite: "None",
+        domain: "https://candid-capybara-9e49cc.netlify.app",
+        sameSite: "none",
     },
 }))
 
@@ -69,5 +63,5 @@ app.use("/api/payment", require("./routes/payment"))
 app.use("/api/transaction", require("./routes/transaction"))
 
 
-app.listen(8080, () => console.log("server started at port 8000"))
+app.listen(8000, () => console.log("server started at port 8000"))
 
