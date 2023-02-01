@@ -9,7 +9,6 @@ const morgan = require("morgan")
 const passport = require("passport")
 
 
-app.set("trust proxy", 1)
 app.use(cors({
     origin: [
         "https://candid-capybara-9e49cc.netlify.app",
@@ -18,6 +17,7 @@ app.use(cors({
     methods: ["POST,PUT,GET,DELETE"],
     credentials: true
 }))
+app.set("trust proxy", 1)
 
 
 app.use(cookieParser())
@@ -26,12 +26,11 @@ app.use(morgan("common"))
 
 require("./services/db/connectDb")()
 require("./services/passport/passport")
-
-
 const store = MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
     ttl: 31556952000,
-    collectionName: "vrumies_session"
+    collectionName: "vrumies_session",
+    autoRemove: 'native',
 })
 
 
@@ -39,7 +38,6 @@ app.use(session({
     name: "vrumies.sid",
     secret: process.env.SESSION_SECRET,
     resave: false,
-    store,
     saveUninitialized: false,
     cookie: {
         secure: true,
@@ -48,6 +46,7 @@ app.use(session({
         domain: "https://candid-capybara-9e49cc.netlify.app",
         sameSite: "None",
     },
+    store,
 }))
 
 app.use(passport.initialize())
