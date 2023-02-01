@@ -11,15 +11,14 @@ const passport = require("passport")
 
 app.use(cors({
     origin: [
-        "https://candid-capybara-9e49cc.netlify.app",
-        "http://localhost:3000",
+        process.env.FRONTEND_URL,
     ],
-    methods: ["POST,PUT,GET,DELETE"],
+    methods: ["POST,PUT,GET,DELETE,PUT,OPTIONS"],
     credentials: true
 }))
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Origin', "https://candid-capybara-9e49cc.netlify.app");
+    res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
     next();
