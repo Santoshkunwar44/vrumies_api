@@ -12,6 +12,7 @@ const passport = require("passport")
 app.use(cors({
     origin: [
         process.env.FRONTEND_URL,
+        'http://localhost:3000'
     ],
     methods: ["POST,PUT,GET,DELETE,PUT,OPTIONS"],
     credentials: true
