@@ -84,7 +84,6 @@ class PostController {
     async addMoreVBTtoPost(req, res) {
         const { id } = req.params;
         const { vbt, userId } = req.body
-        console.log(id, vbt, userId)
         try {
             if (!id || !vbt) {
                 throw new Error("Invalid credentails ");
@@ -127,15 +126,19 @@ class PostController {
     }
 
     async getPostByUserId(req, res) {
-
         const { userId } = req.params;
         try {
-            const thepost = await Post.find({
+            const postRequest = await Post.find({
                 owner: userId,
-                isHidden: false
+                isHidden: false,
+                type: "Request"
             }).populate("owner")
-
-            return res.status(200).json({ message: thepost, success: true })
+            const postAdvertise = await Post.find({
+                isHidden: false,
+                owner: userId,
+                type: "Advertise"
+            }).populate("owner")
+            return res.status(200).json({ message: { postRequest, postAdvertise }, success: true })
 
         } catch (error) {
 
@@ -145,7 +148,6 @@ class PostController {
 
 
     }
-
 
     async hidePost(req, res) {
 
